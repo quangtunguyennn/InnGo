@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Syne-VariableFont_wght.ttf",
+      "sha1": "6972eebd912c4d3093ffd8804deec2975f5a9133"
+    },
+    {
+      "path": "src/assets/fonts/Urbanist-VariableFont_wght.ttf",
+      "sha1": "2b29d1e7374ee4fade560f7dd11ebec24b87419a"
+    }
+  ]
+}
