@@ -41,11 +41,10 @@ export default function Login({ onLoginSuccess }) {
                     onLoginSuccess(token);
                 }
 
-                // Đã sửa lỗi điều hướng tại đây: Xóa lịch sử trang Login và nhảy thẳng vào Tab Home
                 navigation.reset({
                     index: 0,
                     routes: [{ 
-                        name: 'MainTabs', // LƯU Ý: Nếu App.js của bạn đặt tên khác cho Tab Navigator, hãy sửa lại 'MainTabs' cho khớp nhé
+                        name: 'MainTabs', 
                         params: { screen: 'Home' } 
                     }],
                 });

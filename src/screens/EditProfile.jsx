@@ -9,7 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const baseURL = 'http://localhost:28538/';
 
 export default function EditProfile({ route, navigation }) {
-  // Lấy data profile được truyền từ màn hình Profile
+ 
   const { profile } = route.params || {};
 
   const [fullName, setFullName] = useState(profile?.fullname || '');

@@ -93,10 +93,8 @@ export default function Profile({ navigation }) {
             <TouchableOpacity
               style={styles.loginBtn}
               onPress={() => {
-                // Nếu Login nằm ở Stack ngoài cùng
                 navigation.getParent()?.navigate('Login');
 
-                // NẾU VẪN LỖI: Hãy mở App.js lên kiểm tra lại chính xác thuộc tính name="..." của màn hình Login!
               }}
             >
               <Text style={styles.loginBtnText}>Đăng nhập ngay</Text>
@@ -104,7 +102,6 @@ export default function Profile({ navigation }) {
           </View>
         ) : (
           <View>
-            {/* Info Card */}
             <View style={styles.infoCard}>
               <View style={styles.profileHeader}>
                 <View style={styles.avatar}>
@@ -139,7 +136,6 @@ export default function Profile({ navigation }) {
               </View>
             </View>
 
-            {/* Menu Options */}
             <View style={styles.menuContainer}>
               <TouchableOpacity
                 style={styles.menuItem}
@@ -152,7 +148,6 @@ export default function Profile({ navigation }) {
                 <Text style={styles.menuArrow}>›</Text>
               </TouchableOpacity>
 
-              {/* NÚT XEM LỊCH SỬ ĐẶT PHÒNG */}
               <TouchableOpacity
                 style={styles.menuItem}
                 onPress={() => navigation.navigate('Bookings')}
@@ -162,7 +157,6 @@ export default function Profile({ navigation }) {
                 <Text style={styles.menuArrow}>›</Text>
               </TouchableOpacity>
 
-              {/* TÍCH HỢP NÚT ĐÁNH GIÁ CỦA TÔI */}
               <TouchableOpacity
                 style={styles.menuItem}
                 onPress={() => navigation.navigate('MyReviews')}

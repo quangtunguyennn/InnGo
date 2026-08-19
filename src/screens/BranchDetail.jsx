@@ -6,9 +6,9 @@ import axios from 'axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const baseURL = 'http://localhost:28538/'; // Đổi thành 10.0.2.2 nếu dùng Android Emulator
+const baseURL = 'http://localhost:28538/'; 
 
-// Component hiển thị từng thẻ phòng, có gọi API lấy rating
+
 const RoomCard = ({ item, checkInDate, checkOutDate, navigation }) => {
   const [rating, setRating] = useState(0);
 

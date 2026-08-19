@@ -19,15 +19,15 @@ export default function CompletePaymentBank({ route, navigation }) {
 
   const [loading, setLoading] = useState(false);
 
-  // Tạo URL VietQR động theo thông tin chuyển khoản
+
   const qrCodeUrl = `https://img.vietqr.io/image/${bankName}-${accountNumber}-compact2.png?amount=${amount}&addInfo=InnGo%20Booking%20${bookingId}&accountName=${encodeURIComponent(accountName)}`;
 
-  // Giả lập chức năng lưu QR
+ 
   const handleSaveQR = () => {
     Alert.alert("Thành công", "Đã tải mã QR về thư viện ảnh thiết bị.");
   };
 
-  // Gọi API xác nhận hoàn tất thanh toán
+
   const handleCompletePayment = async () => {
     if (!bookingId) {
       Alert.alert("Lỗi", "Không tìm thấy thông tin đơn đặt phòng.");
@@ -47,7 +47,7 @@ export default function CompletePaymentBank({ route, navigation }) {
         headers: { Authorization: `Bearer ${token}` }
       };
 
-      // Gọi API PATCH /api/payment/complete?bookingId=...
+    
       const response = await axios.patch(
         `${baseURL}/api/payment/complete?bookingId=${bookingId}`,
         {},
@@ -79,7 +79,7 @@ export default function CompletePaymentBank({ route, navigation }) {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         
-        {/* Header Navigation */}
+       
         <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
           <Text style={styles.backBtnText}>← Quay lại</Text>
         </TouchableOpacity>
@@ -87,7 +87,7 @@ export default function CompletePaymentBank({ route, navigation }) {
         <Text style={styles.title}>Thanh toán chuyển khoản</Text>
         <Text style={styles.subtitle}>Sử dụng ứng dụng ngân hàng để quét mã QR bên dưới</Text>
 
-        {/* Khung Mã QR */}
+      
         <View style={styles.qrCard}>
           <Image 
             source={{ uri: qrCodeUrl }} 
@@ -99,7 +99,7 @@ export default function CompletePaymentBank({ route, navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* Chi tiết chuyển khoản */}
+     
         <View style={styles.infoCard}>
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Ngân hàng:</Text>
@@ -123,7 +123,7 @@ export default function CompletePaymentBank({ route, navigation }) {
           </View>
         </View>
 
-        {/* Nút xác nhận thanh toán */}
+       
         <TouchableOpacity 
           style={[styles.completeBtn, loading && styles.disabledBtn]} 
           onPress={handleCompletePayment}

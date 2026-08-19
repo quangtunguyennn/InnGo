@@ -89,7 +89,6 @@ export default function Home({ navigation }) {
                     </View>
                 )}
                 renderItem={({ item }) => (
-                    // ĐÃ SỬA: Cho phép bấm vào thẻ để điều hướng
                     <TouchableOpacity 
                         style={styles.card}
                         activeOpacity={0.9}

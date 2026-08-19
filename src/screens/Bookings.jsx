@@ -36,22 +36,22 @@ export default function Bookings({ navigation }) {
       const config = { headers: { Authorization: `Bearer ${token}` } };
       const response = await axios.get(`${baseURL}api/booking/viewMyBookings`, config);
       
-      // Kiểm tra trạng thái review và trạng thái hoàn tất thanh toán
+     
       const enrichedBookings = await Promise.all(
         response.data.map(async (booking) => {
           let isReviewed = false;
           let isPaymentCompleted = false;
 
-          // Gọi API kiểm tra thanh toán đã hoàn tất hay chưa
+  
           try {
             const paymentRes = await axios.get(`${baseURL}api/payment/isCompleted?bookingId=${booking.bookingId}`, config);
             isPaymentCompleted = paymentRes.data;
           } catch (err) {
             console.error(`Lỗi check payment đơn ${booking.bookingId}:`, err);
-            isPaymentCompleted = booking.paymentStatus === 'Paid'; // Fallback nếu lỗi API
+            isPaymentCompleted = booking.paymentStatus === 'Paid'; 
           }
 
-          // Kiểm tra đánh giá đối với đơn Checked out
+
           if (booking.status === 'Checked out') {
             try {
               const reviewRes = await axios.get(`${baseURL}api/booking/isReviewed?bookingId=${booking.bookingId}`, config);
@@ -150,7 +150,7 @@ export default function Bookings({ navigation }) {
     const paymentStatus = getPaymentStatus(item.paymentStatus);
     const isCashPayment = item.paymentMethod && item.paymentMethod.toLowerCase().includes('cash');
     
-    // Đã sửa đổi tại đây: Thêm && !item.isPaymentCompleted để ẩn nút Hủy/Sửa nếu đã thanh toán
+   
     const canModify = item.status !== 'Cancelled' && item.status !== 'Checked out' && !item.isPaymentCompleted;
     const isCheckedOut = item.status === 'Checked out';
 

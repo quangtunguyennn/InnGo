@@ -9,13 +9,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Favorites({ navigation }) {
-  // LƯU Ý: Nếu chạy trên máy ảo Android, nhớ đổi localhost thành 10.0.2.2 nhé
+  
   const baseURL = 'http://localhost:28538/'; 
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  // Lấy danh sách Wishlist
+  
   const fetchWishlist = useCallback(async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
@@ -34,16 +34,16 @@ export default function Favorites({ navigation }) {
     fetchWishlist(); 
   }, [fetchWishlist]);
 
-  // Xóa khỏi Wishlist (Dùng Toggle API)
+ 
   const handleRemoveWishlist = async (branchId, roomId) => {
     try {
       const token = await AsyncStorage.getItem('userToken');
       const config = { headers: { Authorization: `Bearer ${token}` } };
       
-      // Gọi API Toggle
+     
       await axios.patch(`${baseURL}api/wishlist/toggle?branchId=${branchId}&roomId=${roomId}`, {}, config);
       
-      // Cập nhật lại UI lập tức bằng cách lọc phòng vừa xóa
+      
       setWishlist((prev) => prev.filter(
         item => (item.roomId || item.RoomId) !== roomId || (item.branchId || item.BranchId) !== branchId
       ));
@@ -55,7 +55,7 @@ export default function Favorites({ navigation }) {
   };
 
   const renderWishlistItem = ({ item }) => {
-    // Xử lý case nhạy cảm chữ hoa/thường do JSON DTO
+   
     const bId = item.branchId || item.BranchId;
     const rId = item.roomId || item.RoomId;
     const price = item.roomPrice || item.RoomPrice || 0;
@@ -63,21 +63,21 @@ export default function Favorites({ navigation }) {
     const bName = item.branchName || item.BranchName;
     const imgUrl = item.roomImageUrl || item.RoomImageUrl || 'https://via.placeholder.com/400x200';
 
-    // Gom dữ liệu thành cấu trúc object "room" mà trang RoomDetail đang cần
+   
     const roomData = {
       roomId: rId,
       branchId: bId,
       price: price,
       imageUrl: imgUrl,
       roomType: rName,
-      status: 'Available', // Trạng thái mặc định để code bên RoomDetail không bị lỗi UI
+      status: 'Available', 
     };
 
     return (
       <TouchableOpacity 
         activeOpacity={0.8} 
         style={styles.card}
-        // Đã sửa: Truyền object roomData thay vì truyền lẻ tẻ
+       
         onPress={() => navigation.navigate('RoomDetail', { room: roomData })}
       >
         <Image source={{ uri: imgUrl }} style={styles.cardImage} resizeMode="cover" />
@@ -113,7 +113,6 @@ export default function Favorites({ navigation }) {
 
             <TouchableOpacity 
               style={styles.bookButton}
-              // Đã sửa: Truyền object roomData vào nút đặt phòng
               onPress={() => navigation.navigate('RoomDetail', { room: roomData })}
             >
               <Text style={styles.bookButtonText}>Đặt phòng</Text>

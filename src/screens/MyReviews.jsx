@@ -20,7 +20,6 @@ export default function MyReviews({ navigation }) {
       const config = { headers: { Authorization: `Bearer ${token}` } };
       
       const response = await axios.get(`${baseURL}api/review/my`, config);
-      // Đảo ngược danh sách để đánh giá mới nhất lên đầu
       setReviews(response.data ? response.data.reverse() : []);
     } catch (error) {
       console.error('Lỗi khi lấy danh sách đánh giá:', error);
@@ -34,7 +33,6 @@ export default function MyReviews({ navigation }) {
     fetchMyReviews();
   }, [fetchMyReviews]);
 
-  // Hàm định dạng ngày tháng sang dd/mm/yyyy
   const formatDate = (dateString) => {
     if (!dateString || dateString.startsWith('0001')) return '---';
     const date = new Date(dateString);
@@ -46,7 +44,6 @@ export default function MyReviews({ navigation }) {
     });
   };
 
-  // Hàm render số sao
   const renderStars = (rating) => {
     const totalStars = 5;
     let stars = [];
@@ -62,7 +59,6 @@ export default function MyReviews({ navigation }) {
 
   const renderReviewItem = ({ item }) => (
     <View style={styles.reviewCard}>
-      {/* KHU VỰC THÔNG TIN PHÒNG */}
       <View style={styles.roomHeaderSection}>
         <Image 
           source={{ uri: item.roomImageUrl || 'https://via.placeholder.com/150' }} 
@@ -84,7 +80,6 @@ export default function MyReviews({ navigation }) {
 
       <View style={styles.divider} />
 
-      {/* KHU VỰC ĐÁNH GIÁ & BÌNH LUẬN */}
       <View style={styles.reviewContentSection}>
         <View style={styles.ratingRow}>
           {renderStars(item.rating)}
@@ -132,7 +127,6 @@ export default function MyReviews({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* HEADER MÀN HÌNH */}
       <View style={styles.header}>
         <TouchableOpacity 
           style={styles.backButton} 
@@ -145,7 +139,6 @@ export default function MyReviews({ navigation }) {
         <View style={{ width: 70 }} />
       </View>
 
-      {/* DANH SÁCH ĐÁNH GIÁ */}
       <FlatList
         data={reviews}
         keyExtractor={(item, index) => index.toString()}
@@ -204,7 +197,6 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   
-  // Section 1: Thông tin phòng
   roomHeaderSection: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -243,7 +235,6 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
 
-  // Section 2: Đánh giá & nhận xét
   reviewContentSection: {},
   ratingRow: {
     flexDirection: 'row',
@@ -298,7 +289,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 
-  // Empty State Styles
   emptyContainer: { 
     flex: 1, 
     justifyContent: 'center', 

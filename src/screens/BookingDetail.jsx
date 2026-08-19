@@ -26,7 +26,7 @@ export default function BookingDetail({ route, navigation }) {
       try {
         const token = await AsyncStorage.getItem('userToken');
         const config = { headers: { Authorization: `Bearer ${token}` } };
-        // API dựa theo ảnh: GET /api/booking/get/{bookingId}
+       
         const response = await axios.get(`${baseURL}api/booking/get/${bookingId}`, config);
         setDetail(response.data);
       } catch (error) {

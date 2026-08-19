@@ -62,7 +62,7 @@ export default function BlogDetail({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* THANH HEADER CHỨA NÚT QUAY VỀ */}
+    
       <View style={styles.topBar}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -78,7 +78,7 @@ export default function BlogDetail({ route, navigation }) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* Ảnh bìa */}
+        
         <Image
           source={{
             uri: blog.thumbnailUrl || 'https://via.placeholder.com/600x400',
@@ -93,7 +93,7 @@ export default function BlogDetail({ route, navigation }) {
           <Text style={styles.bodyText}>{blog.content}</Text>
         </View>
 
-        {/* Khu vực CTA */}
+       
         <View style={styles.ctaContainer}>
           <View style={styles.ctaBadge}>
             <Text style={styles.ctaBadgeText}>Ưu đãi độc quyền</Text>
@@ -110,7 +110,7 @@ export default function BlogDetail({ route, navigation }) {
             style={styles.ctaButton}
             activeOpacity={0.8}
             onPress={() => {
-              // Chuyển hướng về Tab Home và truyền param destination
+           
               navigation.navigate('MainTabs', {
                 screen: 'Home',
                 params: { destination: blog.slug },
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#FFFFFF' },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 
-  /* TopBar Style */
+  
   topBar: {
     height: 50,
     paddingHorizontal: 16,

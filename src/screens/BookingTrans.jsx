@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function BookingTrans({ route, navigation }) {
   const { room, searchCheckIn, searchCheckOut } = route.params;
 
-  // Dùng 10.0.2.2 cho Android Emulator thay vì localhost
+  
   const baseURL = 'http://localhost:28538/';
 
   const [services, setServices] = useState([]);
@@ -110,7 +110,7 @@ export default function BookingTrans({ route, navigation }) {
     };
 
     try {
-      // 1. Lấy Token đăng nhập từ bộ nhớ tạm
+    
       const token = await AsyncStorage.getItem('userToken');
 
       if (!token) {
@@ -122,7 +122,7 @@ export default function BookingTrans({ route, navigation }) {
         return;
       }
 
-      // 2. Đính kèm Token vào Header Authorization
+      
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -130,7 +130,7 @@ export default function BookingTrans({ route, navigation }) {
         },
       };
 
-      // 3. Gọi API Đặt phòng
+      
       const response = await axios.post(
         `${baseURL}api/booking/createNewBooking`,
         bookingPayload,
@@ -144,7 +144,7 @@ export default function BookingTrans({ route, navigation }) {
             paymentMethod === 'Cash' ? 'Tiền mặt' : 'Chuyển khoản'
           }!`,
           [
-            // ĐÃ SỬA TẠI ĐÂY: Chuyển hướng chính xác vào tab Bookings của MainTabs
+           
             {
               text: 'OK',
               onPress: () =>

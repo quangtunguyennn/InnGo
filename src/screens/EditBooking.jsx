@@ -13,9 +13,9 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import DateTimePicker from '@react-native-community/datetimepicker'; // Thêm import DateTimePicker
+import DateTimePicker from '@react-native-community/datetimepicker'; 
 
-// Hàm hỗ trợ tính số đêm
+
 const calculateNights = (checkIn, checkOut) => {
   if (!checkIn || !checkOut) return 0;
   const inDate = new Date(checkIn);
@@ -25,7 +25,7 @@ const calculateNights = (checkIn, checkOut) => {
   return diffDays > 0 ? diffDays : 0;
 };
 
-// Hàm hỗ trợ format ngày (YYYY-MM-DD) sang (DD/MM/YYYY) để hiển thị đẹp hơn
+
 const formatDateToVN = dateString => {
   if (!dateString) return '';
   const [year, month, day] = dateString.split('-');
@@ -39,21 +39,21 @@ export default function EditBooking({ route, navigation }) {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  // States form cơ bản
+  
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('Cash');
 
-  // States quản lý DatePicker
+
   const [showPicker, setShowPicker] = useState(false);
-  const [pickerMode, setPickerMode] = useState('checkIn'); // 'checkIn' hoặc 'checkOut'
+  const [pickerMode, setPickerMode] = useState('checkIn'); 
   const [currentPickerDate, setCurrentPickerDate] = useState(new Date());
 
-  // States dịch vụ
+  
   const [allServices, setAllServices] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
 
-  // States dùng cho tính toán giá Tạm tính trên UI
+ 
   const [roomPrice, setRoomPrice] = useState(0);
   const [estimatedTotal, setEstimatedTotal] = useState(0);
 
@@ -63,7 +63,7 @@ export default function EditBooking({ route, navigation }) {
         const token = await AsyncStorage.getItem('userToken');
         const config = { headers: { Authorization: `Bearer ${token}` } };
 
-        // 1. Gọi API lấy toàn bộ Services
+        
         const servicesResponse = await axios.get(
           `${baseURL}api/service/getAll`,
           config,
@@ -71,7 +71,7 @@ export default function EditBooking({ route, navigation }) {
         const servicesData = servicesResponse.data || [];
         setAllServices(servicesData);
 
-        // 2. Gọi API lấy chi tiết Booking
+       
         const bookingResponse = await axios.get(
           `${baseURL}api/booking/get/${bookingId}`,
           config,
@@ -84,7 +84,7 @@ export default function EditBooking({ route, navigation }) {
         setCheckOutDate(outStr);
         setPaymentMethod(data.paymentMethod || 'Cash');
 
-        // 3. Xử lý dịch vụ cũ đã chọn & mapping giá tiền
+    
         let oldServicesTotal = 0;
         const mappedSelectedServices = [];
 
@@ -105,7 +105,7 @@ export default function EditBooking({ route, navigation }) {
         }
         setSelectedServices(mappedSelectedServices);
 
-        // 4. Nội suy giá phòng / 1 đêm
+       
         const oldNights = calculateNights(inStr, outStr);
         const derivedRoomPrice =
           oldNights > 0 ? (data.totalAmount - oldServicesTotal) / oldNights : 0;
@@ -132,7 +132,7 @@ export default function EditBooking({ route, navigation }) {
     setEstimatedTotal(newTotal > 0 ? newTotal : 0);
   }, [checkInDate, checkOutDate, selectedServices, roomPrice]);
 
-  // Hàm mở DatePicker
+  
   const openDatePicker = mode => {
     setPickerMode(mode);
     const activeDateStr = mode === 'checkIn' ? checkInDate : checkOutDate;
@@ -144,18 +144,18 @@ export default function EditBooking({ route, navigation }) {
     setShowPicker(true);
   };
 
-  // Hàm xử lý khi chọn ngày trên DatePicker
+ 
   const onDateChange = (event, selectedDate) => {
     if (Platform.OS === 'android') {
-      setShowPicker(false); // Android ẩn picker ngay sau khi chọn
+      setShowPicker(false); 
     }
 
     if (selectedDate) {
-      const dateStr = selectedDate.toISOString().split('T')[0]; // Format YYYY-MM-DD
+      const dateStr = selectedDate.toISOString().split('T')[0]; 
 
       if (pickerMode === 'checkIn') {
         setCheckInDate(dateStr);
-        // Tự động đẩy ngày trả phòng lên nếu ngày nhận phòng sau ngày trả phòng
+        
         if (checkOutDate && new Date(dateStr) >= new Date(checkOutDate)) {
           const nextDay = new Date(selectedDate);
           nextDay.setDate(nextDay.getDate() + 1);
@@ -259,11 +259,11 @@ export default function EditBooking({ route, navigation }) {
           Sửa ngày lưu trú, dịch vụ đi kèm hoặc phương thức thanh toán.
         </Text>
 
-        {/* THÔNG TIN LƯU TRÚ VÀ GIÁ PHÒNG */}
+        
         <View style={styles.section}>
           <View style={styles.sectionHeaderRow}>
             <Text style={styles.sectionTitle}>1. Thời gian lưu trú</Text>
-            {/* HIỂN THỊ GIÁ PHÒNG 1 ĐÊM Ở ĐÂY */}
+         
             <Text style={styles.roomPriceLabel}>
               Giá phòng:{' '}
               <Text style={styles.roomPriceValue}>
@@ -301,18 +301,18 @@ export default function EditBooking({ route, navigation }) {
           </View>
         </View>
 
-        {/* HIỂN THỊ COMPONENT DATE PICKER */}
+     
         {showPicker && (
           <DateTimePicker
             value={currentPickerDate}
             mode="date"
             display={Platform.OS === 'ios' ? 'spinner' : 'default'}
             onChange={onDateChange}
-            minimumDate={new Date()} // Không cho phép chọn ngày trong quá khứ
+            minimumDate={new Date()} 
           />
         )}
 
-        {/* DỊCH VỤ ĐI KÈM */}
+   
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>2. Dịch vụ đi kèm</Text>
           {allServices.length === 0 ? (
@@ -366,7 +366,7 @@ export default function EditBooking({ route, navigation }) {
           )}
         </View>
 
-        {/* PHƯƠNG THỨC THANH TOÁN */}
+     
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>3. Phương thức thanh toán</Text>
           <View style={styles.radioGroup}>
@@ -414,7 +414,7 @@ export default function EditBooking({ route, navigation }) {
         </View>
       </ScrollView>
 
-      {/* FOOTER THANH TOÁN & LƯU */}
+
       <View style={styles.bottomBar}>
         <View style={styles.totalRow}>
           <View>
@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
   formGroup: { marginBottom: 16 },
   label: { fontSize: 14, fontWeight: '600', color: '#344054', marginBottom: 8 },
 
-  /* Style mới cho DatePicker Button (thay thế TextInput) */
+  
   datePickerButton: {
     backgroundColor: '#FFF',
     borderWidth: 1,

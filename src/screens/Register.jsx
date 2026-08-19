@@ -29,7 +29,6 @@ export default function Register({ navigation }) {
 
         setLoading(true);
         try {
-            // Gửi dữ liệu đúng với RegisterRequestDTO ở backend
             const payload = {
                 FullName: fullName,
                 Email: email,

@@ -8,15 +8,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function PostReview({ route, navigation }) {
-  // Lấy dữ liệu được truyền từ màn hình Bookings
   const { bookingId, roomId } = route.params || {};
   const baseURL = 'http://localhost:28538/';
 
-  const [rating, setRating] = useState(0); // 0 là chưa chọn
+  const [rating, setRating] = useState(0); 
   const [comment, setComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  // Mảng dùng để render 5 ngôi sao
+  
   const stars = [1, 2, 3, 4, 5];
 
   const handleSubmit = async () => {
@@ -40,7 +39,6 @@ export default function PostReview({ route, navigation }) {
       const token = await AsyncStorage.getItem('userToken');
       const config = { headers: { Authorization: `Bearer ${token}` } };
       
-      // Đã bổ sung bookingId cho đúng với DTO ở Backend
       const payload = {
         bookingId: bookingId,
         roomId: roomId,
@@ -89,7 +87,6 @@ export default function PostReview({ route, navigation }) {
             </Text>
           </View>
 
-          {/* KHU VỰC CHỌN SAO */}
           <View style={styles.card}>
             <Text style={styles.sectionTitle}>Mức độ hài lòng của bạn</Text>
             
@@ -112,7 +109,6 @@ export default function PostReview({ route, navigation }) {
             </Text>
           </View>
 
-          {/* KHU VỰC NHẬP BÌNH LUẬN */}
           <View style={styles.card}>
             <Text style={styles.sectionTitle}>Chia sẻ chi tiết</Text>
             <Text style={styles.inputHint}>
@@ -133,7 +129,6 @@ export default function PostReview({ route, navigation }) {
 
         </ScrollView>
 
-        {/* NÚT GỬI ĐÁNH GIÁ */}
         <View style={styles.bottomBar}>
           <TouchableOpacity 
             style={[styles.submitBtn, submitting && { opacity: 0.7 }]}

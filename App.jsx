@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
+import { View, ActivityIndicator, StyleSheet, Text, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Import các màn hình chính
 import Home from './src/screens/Home';
 import Login from './src/screens/Login';
 import BranchDetail from './src/screens/BranchDetail';
 import BookingTrans from './src/screens/BookingTrans';
 import CustomBottomNavigation from './src/components/CustomBottomNavigation';
 
-// Giả định/Import các màn hình mới
 import Bookings from './src/screens/Bookings';
 import Favorites from './src/screens/Favorites';
 import Profile from './src/screens/Profile';
@@ -33,15 +31,19 @@ import CompletePaymentBank from './src/screens/CompletePaymentBank';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// --- Màn hình Splash Screen ---
 const SplashScreen = () => (
   <View style={styles.splashContainer}>
-    <Text style={styles.splashLogo}>InnGo</Text>
-    <ActivityIndicator size="large" color="#ffffff" style={{ marginTop: 20 }} />
+    <Image
+      source={require('./src/assets/logo.png')}
+      style={styles.splashLogo}
+      resizeMode="cover"
+    />
+
+    <Text style={styles.brandName}>InnGo</Text>
+    <ActivityIndicator size="large" color="#ffffff" />
   </View>
 );
 
-// --- CỤM TAB BAR CHÍNH (4 TABS) ---
 function MainTabs() {
   return (
     <Tab.Navigator
@@ -49,7 +51,7 @@ function MainTabs() {
       tabBar={props => <CustomBottomNavigation {...props} />}
     >
       <Tab.Screen name="Home" component={Home} />
-      {/* Thêm tab Blogs vào đây, ngay sau Home */}
+
       <Tab.Screen name="Blogs" component={Blogs} />
       <Tab.Screen name="Bookings" component={Bookings} />
       <Tab.Screen name="Favorites" component={Favorites} />
@@ -88,22 +90,19 @@ export default function App() {
   }
 
   return (
-    // Bọc SafeAreaProvider ở lớp ngoài cùng của ứng dụng
     <SafeAreaProvider>
       <NavigationContainer>
-        {/* Đã gỡ bỏ điều kiện phân luồng, luôn cho MainTabs (Home) lên đầu */}
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="MainTabs">
-          
-          {/* Màn hình Tab chính */}
+        <Stack.Navigator
+          screenOptions={{ headerShown: false }}
+          initialRouteName="MainTabs"
+        >
           <Stack.Screen name="MainTabs" component={MainTabs} />
 
-          {/* Các màn hình Auth */}
           <Stack.Screen name="Login">
             {props => <Login {...props} onLoginSuccess={setUserToken} />}
           </Stack.Screen>
           <Stack.Screen name="Register" component={Register} />
 
-          {/* Các màn hình phụ trợ & Chi tiết */}
           <Stack.Screen name="BranchDetail" component={BranchDetail} />
           <Stack.Screen name="RoomDetail" component={RoomDetail} />
           <Stack.Screen name="Bookings" component={Bookings} />
@@ -116,8 +115,10 @@ export default function App() {
           <Stack.Screen name="PostReview" component={PostReview} />
           <Stack.Screen name="MyReviews" component={MyReviews} />
           <Stack.Screen name="BlogDetail" component={BlogDetail} />
-          <Stack.Screen name="CompletePaymentBank" component={CompletePaymentBank} />
-
+          <Stack.Screen
+            name="CompletePaymentBank"
+            component={CompletePaymentBank}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
@@ -132,9 +133,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF8C00',
   },
   splashLogo: {
-    fontSize: 48,
+    width: 140,
+    height: 140,
+    borderRadius: 35,
+    marginBottom: 15,
+  },
+  brandName: {
+    fontSize: 40,
     fontWeight: '900',
-    color: '#fff',
+    color: '#ffffff',
     letterSpacing: 2,
+    marginBottom: 30,
   },
 });

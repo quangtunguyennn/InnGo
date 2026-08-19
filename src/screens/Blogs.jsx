@@ -5,10 +5,10 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native'; // Thêm dòng này
+import { useNavigation } from '@react-navigation/native'; 
 
-export default function Blogs() { // Bỏ { navigation } ở đây
-  const navigation = useNavigation(); // Khai báo useNavigation ở đây
+export default function Blogs() { 
+  const navigation = useNavigation(); 
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -30,20 +30,20 @@ export default function Blogs() { // Bỏ { navigation } ở đây
   };
 
   const handlePressBlog = (item) => {
-    // Tự động bắt đúng ID
+    
     const id = item.blogId || item.BlogId || item.id;
 
     if (!id) {
-      // Hiển thị Alert thẳng lên điện thoại để bạn dễ nhận biết
+     
       Alert.alert(
         "Lỗi dữ liệu", 
         "Không lấy được ID của bài viết này. Hãy kiểm tra lại Backend xem đã trả về blogId chưa."
       );
       console.log('Dữ liệu bị lỗi:', item);
-      return; // Dừng lại, không chuyển trang
+      return; 
     }
 
-    // Nếu có ID, thực hiện chuyển trang
+   
     navigation.navigate('BlogDetail', { blogId: id });
   };
 
